@@ -19,6 +19,7 @@ import (
 	"github.com/ChainSafe/gossamer/lib/crypto/sr25519"
 	"github.com/ChainSafe/gossamer/pkg/scale"
 	"github.com/ChainSafe/gossamer/tests/utils/config"
+	"github.com/ChainSafe/gossamer/internal/log"
 
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -648,7 +649,8 @@ func TestVerifyForkBlocksWithRespectiveEpochData(t *testing.T) {
 
 	onBlockImportDigestHandler := digest.NewBlockImportHandler(epochState, stateService.Grandpa)
 
-	digestHandler, err := digest.NewHandler(stateService.Block, epochState, stateService.Grandpa)
+	digestLogLvl := log.Info
+	digestHandler, err := digest.NewHandler(digestLogLvl, stateService.Block, epochState, stateService.Grandpa)
 	require.NoError(t, err)
 
 	digestHandler.Start()

@@ -19,6 +19,7 @@ import (
 	"github.com/ChainSafe/gossamer/lib/keystore"
 	"github.com/ChainSafe/gossamer/pkg/scale"
 	"github.com/ChainSafe/gossamer/tests/utils/config"
+	"github.com/ChainSafe/gossamer/internal/log"
 	"go.uber.org/mock/gomock"
 
 	"github.com/stretchr/testify/require"
@@ -49,7 +50,9 @@ func newTestHandler(t *testing.T) (*Handler, *BlockImportHandler, *state.Service
 	err = stateSrvc.Start()
 	require.NoError(t, err)
 
-	dh, err := NewHandler(stateSrvc.Block, stateSrvc.Epoch, stateSrvc.Grandpa)
+	digestLogLvl := log.Info
+
+	dh, err := NewHandler(digestLogLvl, stateSrvc.Block, stateSrvc.Epoch, stateSrvc.Grandpa)
 	require.NoError(t, err)
 
 	blockImportHandler := NewBlockImportHandler(stateSrvc.Epoch, stateSrvc.Grandpa)
