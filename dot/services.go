@@ -551,10 +551,10 @@ func (nodeBuilder) newSyncService(config *cfg.Config, st *state.Service, fg sync
 
 func (nodeBuilder) createDigestHandler(config *cfg.Config, st *state.Service) (*digest.Handler, error) {
 	digestLogLevel, err := log.ParseLevel(config.Log.Digest)
-    if err != nil {
-        return nil, fmt.Errorf("failed to parse digest log level: %w", err)
-    }
-	
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse digest log level: %w", err)
+	}
+
 	return digest.NewHandler(digestLogLevel, st.Block, st.Epoch, st.Grandpa)
 }
 
