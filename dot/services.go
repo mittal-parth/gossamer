@@ -180,16 +180,16 @@ func createRuntime(config *cfg.Config, ns runtime.NodeStorage, st *state.Service
 		return nil, err
 	}
 
-	wasmerLogLevel, err := log.ParseLevel(config.Log.Wasmer)
+	runtimeLogLvl, err := log.ParseLevel(config.Log.Runtime)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse wasmer log level: %w", err)
+		return nil, fmt.Errorf("failed to parse runtime log level: %w", err)
 	}
 	switch config.Core.WasmInterpreter {
 	case wazero_runtime.Name:
 		rtCfg := wazero_runtime.Config{
 			Storage:     ts,
 			Keystore:    ks,
-			LogLvl:      wasmerLogLevel,
+			LogLvl:      runtimeLogLvl,
 			NodeStorage: ns,
 			Network:     net,
 			Transaction: st.Transaction,

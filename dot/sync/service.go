@@ -201,7 +201,6 @@ func (s *SyncService) HandleBlockAnnounce(from peer.ID, msg *network.BlockAnnoun
 
 func (s *SyncService) OnConnectionClosed(who peer.ID) {
 	logger.Tracef("removing peer worker: %s", who.String())
-	logger.Infof("removing peer worker: %s", who.String())
 	s.workerPool.removeWorker(who)
 }
 
